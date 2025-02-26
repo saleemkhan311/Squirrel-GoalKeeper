@@ -1,10 +1,15 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-    public int score = 0;
-    public int highScore = 0;
+    [NonSerialized]public int score = 0;
+    [NonSerialized]public int highScore = 0;
+    [NonSerialized]public int piggyBank = 0;
+    public Text PiggyText;
+    private int currency;
+
     private int recordHighScore = 0;
     private int recordLowScore = 0;
     private int recordMidScore = 0;
@@ -37,6 +42,36 @@ public class ScoreManager : MonoBehaviour
         UpdateScoreUI();
         highScore = PlayerPrefs.GetInt("highScore", 0);
         //PlayerPrefs.SetInt("highScore",recordHighScore);
+        SetBankUI();
+    }
+
+    public void SetBankUI()
+    {
+        piggyBank = PlayerPrefs.GetInt("piggyBank", 0);
+        PiggyText.text = piggyBank.ToString();
+    }
+
+    public bool Purchase(int amount)
+    {
+        if (piggyBank >= amount)
+        {
+            Debug.Log($"Before: {piggyBank}");
+            piggyBank -= amount;
+
+            Debug.Log($"After: {piggyBank}");
+
+
+            PlayerPrefs.SetInt("piggyBank", piggyBank);
+            PlayerPrefs.Save();
+
+            SetBankUI();
+            return true;
+        }
+        else
+        {
+            Debug.Log("You Dont have Enough Money");
+            return false;
+        }
     }
 
     private void OnEnable()
@@ -49,6 +84,9 @@ public class ScoreManager : MonoBehaviour
     public void AddScore(int points)
     {
         score += points;
+        currency += points;
+
+        
         if (score > PlayerPrefs.GetInt("highScore", 0))
         {
             PlayerPrefs.SetInt("highScore", score);
@@ -60,12 +98,31 @@ public class ScoreManager : MonoBehaviour
             level++;
         }
         UpdateScoreUI();
-        
+
+
+       
+
     }
+
+    public void EndGame()
+    {
+        piggyBank = PlayerPrefs.GetInt("PiggyBank", 0);
+        piggyBank += currency;
+        PlayerPrefs.SetInt("piggyBank", piggyBank);
+        PlayerPrefs.Save();
+
+
+    }
+
+   
+
+
     public void UpdateScoreUI()
     {
         scoreText.text = $"Score: {score}";
     }
+    
+
 
     public void UpdateHighScore()
     {

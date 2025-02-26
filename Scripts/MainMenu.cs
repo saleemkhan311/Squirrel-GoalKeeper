@@ -13,6 +13,8 @@ public class MainMenu : MonoBehaviour
     public GameObject gameManager;
     public GameObject records;
 
+    public GameObject shop;
+
 
     public RectTransform imageTransform; // Assign your UI Image (RectTransform)
     public GameObject ripple;
@@ -76,6 +78,12 @@ public class MainMenu : MonoBehaviour
     {
         records.SetActive(true);
         ScoreManager.instance.UpdateRecords();
+    }
+
+    public void ShopUp()
+    {
+        shop.SetActive(true);
+        ScoreManager.instance.SetBankUI();
     }
 
     public void HideRecords()

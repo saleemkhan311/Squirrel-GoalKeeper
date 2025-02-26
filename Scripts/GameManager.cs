@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public GameObject scoreManager;
     public GameObject heartContainer;
     public GameObject gameManager;
+    public GameObject shop  ;
 
 
     public static GameManager instance;
@@ -65,6 +66,12 @@ public class GameManager : MonoBehaviour
             ScoreManager.instance.UpdateHighScore();
 
         }
+    }
+
+    public void Shop()
+    {
+        shop.SetActive(true);
+        ScoreManager.instance.SetBankUI();
     }
 
     public void TakeDamage(int damage)

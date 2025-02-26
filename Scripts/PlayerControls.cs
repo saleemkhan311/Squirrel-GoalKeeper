@@ -115,10 +115,9 @@ public class PlayerControls : MonoBehaviour
     {
         if (collision.CompareTag("Trash"))
         {
-            
+            DamageEffect();
             GameManager.instance.TakeDamage(1);
-           
-            TakeDamage();
+            ScoreManager.instance.EndGame();
         }
 
         if (collision.CompareTag("Nut"))
@@ -155,13 +154,8 @@ public class PlayerControls : MonoBehaviour
 
     }
 
-    private void TakeDamage()
+    private void DamageEffect()
     {
-
-        
-
-
-
         IsFlashing = true;
         if (IsFlashing)
         {
@@ -174,7 +168,7 @@ public class PlayerControls : MonoBehaviour
     Color hitColor = new Color(255, 4, 4, 255);
     Color originalColor;
     private float Interval = .1f;
-    private float duration =.15f;
+    private float duration =.2f;
 
     IEnumerator DamageFlash()
     {
