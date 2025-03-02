@@ -17,6 +17,9 @@ public class ShopManager : MonoBehaviour
     public Sprite BuyButton;
     private Sprite PutButton;
 
+    public AudioSource audioSource;
+    public AudioClip SkinChange;
+
     private SpriteRenderer sr;
     public int SkinPrice = 10;
 
@@ -41,8 +44,8 @@ public class ShopManager : MonoBehaviour
     {
 
         currentIndex = (currentIndex+1) % skins.Length;
-        
-        
+
+        audioSource.PlayOneShot(SkinChange);
 
         UpdateUI();
     }
@@ -50,6 +53,7 @@ public class ShopManager : MonoBehaviour
     public void SkinChangeBack()
     {
         currentIndex = (currentIndex-1) % skins.Length;
+        audioSource.PlayOneShot(SkinChange);
 
         UpdateUI();
     }

@@ -25,6 +25,14 @@ public class GameManager : MonoBehaviour
     public GameObject gameManager;
     public GameObject shop  ;
 
+    public Button muteBtn;
+    public Sprite mute;
+    public Sprite unMute;
+    private bool isMute;
+    public AudioSource audioSource; // Reference to AudioSource
+    public AudioClip ButtonSound;
+    public AudioClip DamageSound;
+
 
     public static GameManager instance;
     
@@ -56,6 +64,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void MuteButton()
+    {
+        isMute = !isMute;
+
+        AudioListener.volume = isMute ? 0f : 1f;
+        muteBtn.image.sprite = isMute ? mute : unMute;
+    }
+
     public void GameOver()
     {
         if(PlayerHealth == 0)
@@ -70,14 +86,18 @@ public class GameManager : MonoBehaviour
 
     public void Shop()
     {
+        audioSource.PlayOneShot(ButtonSound);
         shop.SetActive(true);
         ScoreManager.instance.SetBankUI();
+       
     }
 
     public void TakeDamage(int damage)
     {
         PlayerHealth -= damage;
         UpdateHealthUI(PlayerHealth);
+
+        audioSource.PlayOneShot(DamageSound);
         
         if (PlayerHealth <= 0)
         {
@@ -88,6 +108,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        audioSource.PlayOneShot(ButtonSound);
         DestroyGarbage();
 
         spawner.SetActive(true);
@@ -113,6 +134,7 @@ public class GameManager : MonoBehaviour
 
     public void StopGame()
     {
+        audioSource.PlayOneShot(ButtonSound);
         DestroyGarbage();
 
         player.SetActive(false);

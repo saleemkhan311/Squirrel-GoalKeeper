@@ -24,6 +24,10 @@ public class MainMenu : MonoBehaviour
     public float fadeDuration = 1f; // Time to fade out
     public float waitTime = 2f; // Wait time before restarting
 
+
+    public AudioSource audioSource; // Reference to AudioSource
+    public AudioClip ButtonSound;
+
     private Vector2 originalSize;
     private Color originalColor;
 
@@ -53,7 +57,8 @@ public class MainMenu : MonoBehaviour
     int health;
     public void StartGame()
     {
-        
+        audioSource.PlayOneShot(ButtonSound);
+
         player.SetActive(true);
         tree.SetActive(true);
         scoreManager.SetActive(true);   
@@ -76,12 +81,14 @@ public class MainMenu : MonoBehaviour
 
     public void ShowRecords()
     {
+        audioSource.PlayOneShot(ButtonSound);
         records.SetActive(true);
         ScoreManager.instance.UpdateRecords();
     }
 
     public void ShopUp()
     {
+        audioSource.PlayOneShot(ButtonSound);
         shop.SetActive(true);
         ScoreManager.instance.SetBankUI();
     }

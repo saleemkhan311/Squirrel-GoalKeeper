@@ -22,6 +22,9 @@ public class ScoreManager : MonoBehaviour
     public Text RecordLowScoreText;
     public Text RecordMidScoreText;
 
+    public AudioSource audioSource; // Reference to AudioSource
+    public AudioClip ScoreSound; // Assign in Inspector
+
     private void Awake()
     {
         if (instance == null)
@@ -99,7 +102,7 @@ public class ScoreManager : MonoBehaviour
         }
         UpdateScoreUI();
 
-
+        audioSource.PlayOneShot(ScoreSound);
        
 
     }
@@ -110,8 +113,6 @@ public class ScoreManager : MonoBehaviour
         piggyBank += currency;
         PlayerPrefs.SetInt("piggyBank", piggyBank);
         PlayerPrefs.Save();
-
-
     }
 
    
